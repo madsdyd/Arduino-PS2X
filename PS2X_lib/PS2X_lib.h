@@ -74,8 +74,8 @@ GNU General Public License for more details.
 
 // $$$$$$$$$$$$ DEBUG ENABLE SECTION $$$$$$$$$$$$$$$$
 // to debug ps2 controller, uncomment these two lines to print out debug to uart
-//#define PS2X_DEBUG
-//#define PS2X_COM_DEBUG
+#define PS2X_DEBUG
+#define PS2X_COM_DEBUG
 
 #ifndef PS2X_lib_h
   #define PS2X_lib_h
@@ -174,8 +174,17 @@ class PS2X {
     boolean NewButtonState(unsigned int);    //will be TRUE if button was JUST pressed OR released
     boolean ButtonPressed(unsigned int);     //will be TRUE if button was JUST pressed
     boolean ButtonReleased(unsigned int);    //will be TRUE if button was JUST released
-    void read_gamepad();
-    boolean  read_gamepad(boolean, byte);
+
+    /** Update the data from the gamepad / controller.
+     * 
+     * Returns true if the controller is in analog mode, false otherwise (?)
+     *
+     * If this function return false, values read from other functions will be invalid.
+     * In this case, it may be needed to call reconfigure.
+     *
+     * @return true if successful, false if some kind of error happened. I think. */
+    boolean read_gamepad();
+    boolean read_gamepad(boolean, byte);
     byte readType();
     byte config_gamepad(uint8_t, uint8_t, uint8_t, uint8_t);
     byte config_gamepad(uint8_t, uint8_t, uint8_t, uint8_t, bool, bool);
